@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+
+  <arg name="debug" default="false" />
+  <arg name="step_validation_ns" default="step_validation_node" />
+
+
+    <rosparam 
+	command="load" 
+	file="$(find static_step_validation)/config/footsteps_talos.yaml"
+	/>
+
+
+
+<group if="$(eval arg('debug') == false)">
+
+    <node 
+	pkg="static_step_validation" 
+	name="step_validation_node" 
+	type="step_validation_node"
+	output="screen"
+	/>
+
+</group>
+
+    <node 
+	pkg="tf2_ros"
+	name="map_world_publisher"
+	type="static_transform_publisher" 
+	args=" 0 0 0 0 0 0 1 /odom /map"
+	/>
+
+
+</launch>

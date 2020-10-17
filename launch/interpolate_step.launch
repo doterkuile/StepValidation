@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+
+  <arg name="debug" default="false" />
+  <arg name="step_interpolation_ns" default="step_interpolation_node" />
+  <arg name="execute_step" default="true" />
+  <param name="/full_map_expansion" type="bool" value="false" />
+  <param name="execute_steps" type="bool" value="$(arg execute_step)" />
+
+
+	<rosparam
+	command="load"
+	file= "$(find static_step_validation)/config/footsteps_talos.yaml"
+	/>
+
+
+
+
+
+<group if="$(eval arg('debug') == false)">
+    <node 
+	pkg="static_step_validation" 
+	name="step_interpolation_node" 
+	type="step_interpolation_node"
+	output="screen"
+	/>
+
+</group>
+
+    <node 
+	pkg="tf2_ros"
+	name="map_world_publisher"
+	type="static_transform_publisher" 
+	args=" 0 0 0 0 0 0 1 /odom /map"
+	/>
+
+
+</launch>
